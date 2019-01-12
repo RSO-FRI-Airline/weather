@@ -25,11 +25,6 @@
             <artifactId>kumuluzee-jax-rs-jersey</artifactId>
         </dependency>
         <dependency>
-            <groupId>si.fri.rso</groupId>
-            <artifactId>models</artifactId>
-            <version>${fri_airline.version}</version>
-        </dependency>
-        <dependency>
             <groupId>javax.enterprise</groupId>
             <artifactId>cdi-api</artifactId>
             <version>RELEASE</version>
