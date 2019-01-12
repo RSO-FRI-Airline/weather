@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: weather-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: weather
+  template:
+    metadata:
+      labels:
+        app: weather
+    spec:
+      containers:
+      - image: rsoairlines/fri-airlines-weather:0.0.1
+        name: weather
+        env:
+        - name: DARKSKY
+          valueFrom:
+            secretKeyRef:
+              name: ds-key
+              key: ds-key
+        ports:
+        - containerPort: 8083
+          name: server
+          protocol: TCP
