@@ -15,6 +15,8 @@ kumuluzee:
     password: pass
     max-pool-size: 20
   config:
+    start-retry-delay-ms: 500
+    max-retry-delay-ms: 900000
     etcd:
       hosts: http://192.168.99.100:2379
   discovery:
@@ -22,3 +24,6 @@ kumuluzee:
       hosts: http://192.168.99.100:2379
     ttl: 30
     ping-interval: 5
+
+rest-config:
+  delay: 0

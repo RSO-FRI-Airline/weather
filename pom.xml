@@ -19,6 +19,7 @@
         <kumuluzee.version>3.0.0</kumuluzee.version>
         <fri_airline.version>1.0-SNAPSHOT</fri_airline.version>
         <kumuluzee-discovery.version>1.1.0</kumuluzee-discovery.version>
+        <kumuluzee-config.version>1.1.0</kumuluzee-config.version>
     </properties>
 
     <dependencyManagement>
@@ -29,6 +30,12 @@
                 <version>3.0.0</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.kumuluz.ee.config</groupId>
+                <artifactId>kumuluzee-config-etcd</artifactId>
+                <version>${kumuluzee-config.version}</version>
             </dependency>
 
             <dependency>

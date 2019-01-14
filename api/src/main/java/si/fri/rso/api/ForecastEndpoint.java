@@ -1,12 +1,15 @@
 package si.fri.rso.api;
 
 import com.kumuluz.ee.common.config.EeConfig;
+import com.kumuluz.ee.configuration.cdi.ConfigBundle;
+import com.kumuluz.ee.configuration.cdi.ConfigValue;
 import com.kumuluz.ee.configuration.sources.FileConfigurationSource;
 import com.kumuluz.ee.configuration.utils.ConfigurationUtil;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -24,16 +27,20 @@ import java.util.Optional;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @ApplicationScoped
+@ConfigBundle("test-service.config")
 public class ForecastEndpoint {
 
     @ApplicationScoped
     static HashMap<String, Forecast> cachedForecasts = new HashMap<>();
 
+    @Inject
+    DelayService delayService;
+
     @GET
     @ApplicationScoped
     @Path("/cities/{city}")
     public Response get(@PathParam(value="city") String city){
-
+        delayService.Delay();
         String coords = GetCoordinates(city);
         if(cachedForecasts.containsKey(city)
                 && cachedForecasts.get(city).Timestamp.isAfter(Instant.now().minusSeconds(60*60))){
@@ -87,7 +94,7 @@ public class ForecastEndpoint {
     private String FromApi(String coords) throws Exception{
         Optional<String> s = ConfigurationUtil.getInstance().get("kumuluzee.env.darksky");
         if(!s.isPresent()) throw new Exception("Missing Darksky API key");
-        URL url = new URL("https://api.darksky.net/forecast/"+s.get()+"/"+coords);
+        URL url = new URL("https://api.darksky.net/forecast/"+s.get()+"/"+coords+"?units=si");
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("GET");
         con.setRequestProperty("Content-Type", "application/json");
