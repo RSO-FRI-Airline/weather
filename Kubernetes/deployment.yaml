@@ -13,7 +13,7 @@ spec:
         app: weather
     spec:
       containers:
-      - image: rsoairlines/fri-airlines-weather:0.0.3
+      - image: rsoairlines/fri-airlines-weather:0.0.4
         name: weather
         env:
         - name: DARKSKY
